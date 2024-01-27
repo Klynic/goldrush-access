@@ -1,32 +1,45 @@
-// src/SecondPage.js
-import React from 'react';
-import { TokenBalancesListView,NFTWalletTokenListView } from "@covalenthq/goldrush-kit";
+import React, { useState } from 'react';
+import { TokenBalancesListView, NFTWalletTokenListView } from "@covalenthq/goldrush-kit";
 
 const SecondPage = ({ address, selectedOption }) => {
+  const [isTokenBalancesVisible, setIsTokenBalancesVisible] = useState(true);
+  const [isNFTWalletTokenListVisible, setIsNFTWalletTokenListVisible] = useState(true);
+
   return (
     <div>
       <h1>Token Balances</h1>
-      <TokenBalancesListView
-        chain_names={[
-                  "eth-mainnet",
-                  "matic-mainnet",
-                  "bsc-mainnet",
-                  "avalanche-mainnet",
-                  "optimism-mainnet",
-              ]}
-        address={address}
-      ></TokenBalancesListView>
+      <button onClick={() => setIsTokenBalancesVisible(!isTokenBalancesVisible)}>
+        {isTokenBalancesVisible ? 'Minimize' : 'Show'}
+      </button>
+      <div style={{ display: isTokenBalancesVisible ? 'block' : 'none' }}>
+        <TokenBalancesListView
+          chain_names={[
+            "eth-mainnet",
+            "matic-mainnet",
+            "bsc-mainnet",
+            "avalanche-mainnet",
+            "optimism-mainnet",
+          ]}
+          address={address}
+        />
+      </div>
+
       <h2>NFTWallet Token List</h2>
-      <NFTWalletTokenListView
-              address={address}
-              chain_names={[
-                  "eth-mainnet",
-                  "matic-mainnet",
-                  "bsc-mainnet",
-                  "avalanche-mainnet",
-                  "optimism-mainnet",
-              ]}
-          />
+      <button onClick={() => setIsNFTWalletTokenListVisible(!isNFTWalletTokenListVisible)}>
+        {isNFTWalletTokenListVisible ? 'Minimize' : 'Show'}
+      </button>
+      <div style={{ display: isNFTWalletTokenListVisible ? 'block' : 'none' }}>
+        <NFTWalletTokenListView
+          address={address}
+          chain_names={[
+            "eth-mainnet",
+            "matic-mainnet",
+            "bsc-mainnet",
+            "avalanche-mainnet",
+            "optimism-mainnet",
+          ]}
+        />
+      </div>
     </div>
   );
 };
